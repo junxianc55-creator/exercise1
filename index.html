@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArticulateDAG</title>
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (window.tailwind) tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: {
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Graph libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+
+  <style>
+    body {
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(139, 92, 246, 0.12), transparent 60%),
+        #0b0d12;
+    }
+    #graph {
+      background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 0.75rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25em;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  </style>
+</head>
+<body class="min-h-full text-slate-200 font-sans antialiased">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6 min-h-screen">
+
+    <!-- 1. Header -->
+    <header class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-xl bg-accent-500/15 ring-1 ring-accent-500/40 flex items-center justify-center">
+        <svg class="h-5 w-5 text-accent-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="5" cy="6" r="2" /><circle cx="19" cy="6" r="2" /><circle cx="12" cy="18" r="2" />
+          <path d="M6.5 7.5l4.5 9M17.5 7.5l-4.5 9" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+          Articulate<span class="text-accent-400">DAG</span>
+        </h1>
+        <p class="text-sm text-slate-400">Chabot → Cal State East Bay</p>
+      </div>
+    </header>
+
+    <!-- 2. Controls -->
+    <section class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] items-stretch">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 sm:p-5 flex flex-col justify-center">
+        <label for="major-select" class="text-xs font-medium uppercase tracking-wider text-slate-400 mb-2">
+          Major
+        </label>
+        <select
+          id="major-select"
+          class="w-full sm:max-w-xs rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 pr-10 text-slate-100
+                 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition"
+        >
+          <option value="cs">Computer Science</option>
+          <option value="bio">Biology</option>
+        </select>
+      </div>
+
+      <div class="rounded-2xl border border-accent-500/30 bg-accent-500/10 px-6 py-4 flex items-center gap-4">
+        <span id="semester-count" class="text-5xl sm:text-6xl font-extrabold tabular-nums text-accent-300 leading-none">—</span>
+        <span class="text-sm leading-snug text-slate-300">
+          Minimum<br />
+          <span class="font-semibold text-white">semesters remaining</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- 3. Graph -->
+    <main class="flex-1 flex">
+      <div
+        id="graph"
+        class="flex-1 w-full min-h-[600px] h-[70vh] rounded-2xl border border-slate-800 bg-slate-950/70 shadow-2xl shadow-black/40"
+      ></div>
+    </main>
+
+    <!-- 4. Legend -->
+    <footer class="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl border border-slate-800 bg-slate-900/60 px-5 py-3 text-sm text-slate-300">
+      <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Legend</span>
+      <span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-green-500"></span>Completed</span>
+      <span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-blue-500"></span>Available now</span>
+      <span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-gray-500"></span>Locked</span>
+      <span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-red-500"></span>Critical path</span>
+    </footer>
+  </div>
+
+  <script src="data/cs.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
