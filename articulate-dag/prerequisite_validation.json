@@ -1,0 +1,34 @@
+{
+  "networkx_version": "3.7",
+  "coverage": {
+    "computer_science": 9,
+    "computer_engineering": 15,
+    "biochemistry": 11,
+    "physics": 24
+  },
+  "unique_major_courses": 35,
+  "user_clarified_rules": [
+    "chabot:BIOS21B",
+    "chabot:BIOS21C",
+    "chabot:CHEM1A"
+  ],
+  "unresolved_rules": [],
+  "documented_strict_reference_projection": {
+    "nodes": 59,
+    "edges": 76,
+    "is_dag": true,
+    "cycles": []
+  },
+  "strict_reference_projection_including_proposals": {
+    "nodes": 59,
+    "edges": 76,
+    "is_dag": true,
+    "cycles": []
+  },
+  "limits": [
+    "OR branches are combined only to inspect possible cycles; they are not all required.",
+    "Concurrent and same-term links excluded; not a full scheduling constraint check.",
+    "External unknown nodes have unresearched incoming prerequisites.",
+    "Acyclicity is not proof of curriculum accuracy or student eligibility."
+  ]
+}
